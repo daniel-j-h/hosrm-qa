@@ -1,0 +1,21 @@
+language: generic
+sudo: required
+dist: trusty
+
+cache:
+  directories:
+  - $HOME/.stack
+
+env:
+  - ARGS="--resolver=lts-6"
+  - ARGS="--resolver=lts"
+  - ARGS="--resolver=nightly"
+
+install:
+ - travis_retry curl -sSL https://get.haskellstack.org/ | sh
+
+before_script:
+  - stack $ARGS --no-terminal --install-ghc build
+
+script:
+  - stack $ARGS --no-terminal --install-ghc exec -- hosrm
