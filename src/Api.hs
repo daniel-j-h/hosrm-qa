@@ -17,8 +17,8 @@ import Response (Response(..))
 
 
 data Coordinate = Coordinate
-  { coordinateLongitude :: Float
-  , coordinateLatitude  :: Float }
+  { coordinateLongitude :: Double
+  , coordinateLatitude  :: Double }
   deriving (Show)
 
 instance ToHttpApiData Coordinate where

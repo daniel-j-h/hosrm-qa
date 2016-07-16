@@ -8,7 +8,7 @@ import qualified Data.Text as T
 
 import Args (Arguments(..), execParser, argparser)
 import Api (runRoute, explainError)
-import Response (Response(..), Route(..), RouteLeg(..), RouteStep(..))
+import Response (Response(..), Route(..), RouteLeg(..), RouteStep(..), RouteManeuver(..))
 
 
 checkRoute :: Route -> IO ()
