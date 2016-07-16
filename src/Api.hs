@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, DeriveGeneric, DataKinds, TypeOperators, FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings, DataKinds, TypeOperators, FlexibleInstances #-}
 
 module Api
   ( Coordinate(..)
@@ -72,9 +72,12 @@ instance ToHttpApiData Overview where
 
 data RouteResponse = RouteResponse
   { routeResponseCode :: Text }
-  deriving (Show, Eq, Generic)
+  deriving (Show)
 
-instance FromJSON RouteResponse
+instance FromJSON RouteResponse where
+  parseJSON (Object v) = RouteResponse <$>
+                         v .: "code"
+  parseJSON _          = empty
 
 
 type RouteAPI

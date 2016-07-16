@@ -6,7 +6,7 @@ import Protolude
 import Network.HTTP.Client (newManager, defaultManagerSettings)
 
 import Args (Arguments(..), execParser, argparser)
-import Api (RouteResponse(..), runRoute, explainError)
+import Api  (RouteResponse(..), runRoute, explainError)
 
 
 main :: IO ()
