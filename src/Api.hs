@@ -21,7 +21,7 @@ data RouteResponse = RouteResponse
 instance FromJSON RouteResponse
 
 
-type RouteAPI = "driving" :> Capture "query" Text :> Get '[JSON] RouteResponse
+type RouteAPI = Capture "query" Text :> Get '[JSON] RouteResponse
 
 api :: Proxy RouteAPI
 api = Proxy
@@ -43,4 +43,4 @@ runRoute manager host port = routeAPI coordinates manager baseurl
   where
     coordinates = "-3.279966,51.406314;-3.281205,51.407274"  -- dummy
     baseurl = BaseUrl Http (T.unpack host) port driving
-    driving = "route/v1/driving/"
+    driving = "/route/v1/driving"

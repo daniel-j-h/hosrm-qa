@@ -19,8 +19,8 @@ data Arguments = Arguments
 
 arguments :: Parser Arguments
 arguments = Arguments
-  <$> T.pack <$> strOption (long "host" <> help "Server Host")
-  <*> (option auto         (long "port" <> help "Server Port") <|> pure 80)
+  <$> (T.pack <$> strOption (long "host" <> help "Server Host") <|> pure "router.project-osrm.org")
+  <*> (option auto          (long "port" <> help "Server Port") <|> pure 80)
 
 
 argparser :: ParserInfo Arguments
