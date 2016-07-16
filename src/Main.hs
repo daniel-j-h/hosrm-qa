@@ -4,9 +4,10 @@ module Main where
 
 import Protolude
 import Network.HTTP.Client (newManager, defaultManagerSettings)
+import qualified Data.Text as T
 
 import Args (Arguments(..), execParser, argparser)
-import Api  (RouteResponse(..), runRoute, explainError)
+import Api  (runRoute, explainError)
 
 
 main :: IO ()
@@ -20,4 +21,4 @@ main = do
 
   case response of
     Left  err   -> putStrLn $ "Error: "   <> explainError err
-    Right route -> putStrLn $ "Success: " <> (routeResponseCode route)
+    Right route -> putStrLn $ "Success: " <> (T.pack $ show route)

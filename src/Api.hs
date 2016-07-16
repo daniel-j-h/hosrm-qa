@@ -9,11 +9,12 @@ module Api
 where
 
 import Protolude
-import Data.Aeson
 import Servant.API
 import Servant.Client
 import Network.HTTP.Client (Manager)
 import qualified Data.Text as T
+
+import Response (RouteResponse(..))
 
 
 data Coordinate = Coordinate
@@ -70,18 +71,8 @@ instance ToHttpApiData Overview where
   toQueryParam OverviewFalse      = "false"
 
 
-data RouteResponse = RouteResponse
-  { routeResponseCode :: Text }
-  deriving (Show)
-
-instance FromJSON RouteResponse where
-  parseJSON (Object v) = RouteResponse <$>
-                         v .: "code"
-  parseJSON _          = empty
-
-
 type RouteAPI
-  = "route/v1/driving"
+  = "driving"
   :> Capture    "coordinates"  [Coordinate]
   :> QueryParam "alternatives" Alternatives
   :> QueryParam "steps"        Steps
@@ -114,7 +105,7 @@ runRoute manager host port = routeAPI coordinates alternatives steps geometries 
     steps        = Just StepsTrue
     geometries   = Just GeometriesGeoJson
     overview     = Just OverviewFalse
-    baseurl      = BaseUrl Http (T.unpack host) port ""
+    baseurl      = BaseUrl Http (T.unpack host) port "/route/v1"
 
 
 explainError :: ServantError -> Text
