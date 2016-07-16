@@ -2,7 +2,6 @@
 
 module Api
   ( Coordinate(..)
-  , RouteResponse(..)
   , runRoute
   , runExceptT
   , explainError )

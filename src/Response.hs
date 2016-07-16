@@ -1,29 +1,30 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Response
-  ( RouteResponse(..) )
+  ( RouteResponse(..)
+  , RouteResponseRoute(..) )
 where
 
 import Protolude
 import Data.Aeson
 
 
-data RouteRoutes = RouteRoutes
-  { routeRouteDistance :: Float
-  , routeRouteDuration :: Float }
+data RouteResponseRoute = RouteResponseRoute
+  { routeResponseRouteDistance :: Float
+  , routeResponseRouteDuration :: Float }
   deriving (Show)
 
-instance FromJSON RouteRoutes where
-  parseJSON (Object v) = RouteRoutes     <$>
-                         v .: "distance" <*>
+instance FromJSON RouteResponseRoute where
+  parseJSON (Object v) = RouteResponseRoute <$>
+                         v .: "distance"    <*>
                          v .: "duration"
   parseJSON _          = mzero
 
 
 data RouteResponse = RouteResponse
-  { code     :: Text
-  , message  :: Maybe Text
-  , routes   :: Maybe [RouteRoutes] }
+  { routeResponseCode     :: Text
+  , routeResponseMessage  :: Maybe Text
+  , routeResponseRoutes   :: Maybe [RouteResponseRoute] }
   deriving (Show)
 
 instance FromJSON RouteResponse where
