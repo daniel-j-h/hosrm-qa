@@ -13,7 +13,7 @@ import Servant.Client
 import Network.HTTP.Client (Manager)
 import qualified Data.Text as T
 
-import Response (RouteResponse(..))
+import Response (Response(..))
 
 
 data Coordinate = Coordinate
@@ -77,7 +77,7 @@ type RouteAPI
   :> QueryParam "steps"        Steps
   :> QueryParam "geometries"   Geometries
   :> QueryParam "overview"     Overview
-  :> Get '[JSON] RouteResponse
+  :> Get '[JSON] Response
 
 api :: Proxy RouteAPI
 api = Proxy
@@ -90,11 +90,11 @@ routeAPI
   -> Maybe Overview
   -> Manager
   -> BaseUrl
-  -> ExceptT ServantError IO RouteResponse
+  -> ExceptT ServantError IO Response
 routeAPI = client api
 
 
-runRoute :: Manager -> Text -> Int -> ExceptT ServantError IO RouteResponse
+runRoute :: Manager -> Text -> Int -> ExceptT ServantError IO Response
 runRoute manager host port = routeAPI coordinates alternatives steps geometries overview manager baseurl
   where
     start        = Coordinate { coordinateLongitude = -3.279966, coordinateLatitude = 51.406314 }
@@ -109,7 +109,7 @@ runRoute manager host port = routeAPI coordinates alternatives steps geometries 
 
 explainError :: ServantError -> Text
 explainError (FailureResponse _ _ _)        = "Response Failure" 
-explainError (DecodeFailure msg _ _)        = "Decode Failure" <> T.pack msg
+explainError (DecodeFailure msg _ _)        = "Decode Failure: " <> T.pack msg
 explainError (UnsupportedContentType _ _)   = "Unsupported Content Type"
 explainError (InvalidContentTypeHeader _ _) = "Invalid Content Type Header"
 explainError (ConnectionError _)            = "Connection Error"

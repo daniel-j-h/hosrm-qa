@@ -8,15 +8,15 @@ import qualified Data.Text as T
 
 import Args (Arguments(..), execParser, argparser)
 import Api (runRoute, explainError)
-import Response (RouteResponse(..), RouteResponseRoute(..))
+import Response (Response(..), Route(..), RouteLeg(..), RouteStep(..))
 
 
-checkRoute :: RouteResponseRoute -> IO ()
+checkRoute :: Route -> IO ()
 checkRoute route = putStrLn $  "Duration: " <> duration route <> "s, "
                             <> "Distance: " <> distance route <> "m"
   where
-    duration = T.pack . show . routeResponseRouteDuration
-    distance = T.pack . show . routeResponseRouteDistance
+    duration = T.pack . show . routeDuration
+    distance = T.pack . show . routeDistance
 
 
 main :: IO ()
@@ -29,8 +29,8 @@ main = do
 
   case response of
     Left  err   -> putStrLn $ "Error: " <> explainError err
-    Right route -> case routeResponseRoutes route of
-      Nothing     -> putStrLn $ "Service: " <> routeResponseCode route
+    Right route -> case responseRoutes route of
+      Nothing     -> putStrLn $ "Service: " <> responseCode route
       Just routes -> do
-        putStrLn $ "Success: " <> routeResponseCode route
+        putStrLn $ "Success: " <> responseCode route
         mapM_ checkRoute routes
