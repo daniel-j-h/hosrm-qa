@@ -2,7 +2,7 @@ name:                hosrm
 version:             0.1.0.0
 synopsis:            Interacting with the OSRM HTTP API
 description:         Please see README.md
-homepage:            https://github.com/daniel-j-h/hosrm#readme
+homepage:            https://github.com/daniel-j-h/hosrm-qa#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Daniel J. Hofmann

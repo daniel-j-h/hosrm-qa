@@ -19,7 +19,5 @@ main = do
   response <- runExceptT $ runRoute manager host port 
 
   case response of
-    Left  err   -> putStrLn $ "Error: " <> explainError err
+    Left  err   -> putStrLn $ "Error: "   <> explainError err
     Right route -> putStrLn $ "Success: " <> (routeResponseCode route)
-
-  return ()
