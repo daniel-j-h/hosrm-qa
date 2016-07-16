@@ -1,4 +1,4 @@
-## stack-project-base
+## hosrm-qa
 
 [![Continuous Integration](https://travis-ci.org/daniel-j-h/stack-project-base.svg?branch=master)](https://travis-ci.org/daniel-j-h/stack-project-base)
 
