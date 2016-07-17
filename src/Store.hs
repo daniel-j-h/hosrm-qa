@@ -2,8 +2,9 @@
 
 module Store
   ( migrateAll
-  , runSqlite
   , runMigrationSilent
+  , createSqlitePool
+  , runSqlPool
   , Route(..)
   , Leg(..)
   , Step(..)
@@ -17,7 +18,7 @@ where
 import Protolude
 import Database.Persist
 import Database.Persist.TH  (share, mkPersist,sqlSettings, mkMigrate, persistLowerCase)
-import Database.Persist.Sqlite (runMigrationSilent, runSqlite)
+import Database.Persist.Sqlite (runMigrationSilent, createSqlitePool, runSqlPool)
 
 import qualified Response (Route(..), RouteLeg(..), RouteStep(..), StepManeuver(..))
 import Enum (ManeuverType(..), ManeuverModifier(..))
@@ -48,7 +49,7 @@ class ToStorable a b where
 instance ToStorable Response.Route Route where
   toStorable r = Route (Response.routeDistance r)
                        (Response.routeDuration r)
-                       (toStorable <$> Response.routeLeg r)
+                       (toStorable <$> Response.routeLegs r)
 
 instance ToStorable Response.RouteLeg Leg where
   toStorable l = Leg (Response.routeLegDistance l)

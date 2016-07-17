@@ -37,4 +37,6 @@ executable hosrm
     aeson                 >= 0.11 && < 0.12,
     persistent            >= 2.2 && < 2.3,
     persistent-template   >= 2.1 && < 2.2,
-    persistent-sqlite     >= 2.2 && < 2.3
+    persistent-sqlite     >= 2.2 && < 2.3,
+    resourcet,
+    monad-logger

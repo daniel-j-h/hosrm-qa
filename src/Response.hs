@@ -34,7 +34,7 @@ instance FromJSON Response where
 data Route = Route
   { routeDistance :: Double
   , routeDuration :: Double
-  , routeLeg      :: [RouteLeg] }
+  , routeLegs     :: [RouteLeg] }
   deriving (Show)
 
 instance FromJSON Route where
