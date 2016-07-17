@@ -5,11 +5,16 @@ module Response
   , Route(..)
   , RouteLeg(..)
   , RouteStep(..)
-  , RouteManeuver(..) )
+  , StepManeuver(..)
+  , ManeuverType(..)
+  , ManeuverModifier(..) )
 where
 
 import Protolude
 import Data.Aeson
+
+-- Response sum types live in the Enum module, due to GHC's Stage Restriction
+import Enum
 
 
 data Response = Response
@@ -57,7 +62,7 @@ instance FromJSON RouteLeg where
 data RouteStep = RouteStep
   { routeStepDistance :: Double
   , routeStepDuration :: Double
-  , routeStepManeuver :: RouteManeuver }
+  , routeStepManeuver :: StepManeuver }
   deriving (Show)
 
 instance FromJSON RouteStep where
@@ -68,38 +73,19 @@ instance FromJSON RouteStep where
   parseJSON _          = mzero
 
 
-data RouteManeuver = RouteManeuver
-  { routeManeuverType     :: ManeuverType
-  , routeManeuverModifier :: Maybe ManeuverModifier }
+data StepManeuver = StepManeuver
+  { stepManeuverType     :: ManeuverType
+  , stepManeuverModifier :: Maybe ManeuverModifier }
   deriving (Show)
 
-instance FromJSON RouteManeuver where
-  parseJSON (Object v) = RouteManeuver    <$>
+instance FromJSON StepManeuver where
+  parseJSON (Object v) = StepManeuver     <$>
                          v .:  "type"     <*>
                          v .:? "modifier"
   parseJSON _          = mzero
 
 
-data ManeuverType
-  = ManeuverTypeTurn
-  | ManeuverTypeNewName
-  | ManeuverTypeDepart
-  | ManeuverTypeArrive
-  | ManeuverTypeMerge
-  | ManeuverTypeRamp
-  | ManeuverTypeOnRamp
-  | ManeuverTypeOffRamp
-  | ManeuverTypeFork
-  | ManeuverTypeEndOfRoad
-  | ManeuverTypeUseLane
-  | ManeuverTypeContinue
-  | ManeuverTypeRoundabout
-  | ManeuverTypeRotary
-  | ManeuverTypeRoundaboutTurn
-  | ManeuverTypeNotification
-  | ManeuverTypeUnknown
-  deriving (Show, Eq)
-
+-- See Enum module
 instance FromJSON ManeuverType where
   parseJSON (String "turn")            = return ManeuverTypeTurn
   parseJSON (String "new name")        = return ManeuverTypeNewName
@@ -121,18 +107,7 @@ instance FromJSON ManeuverType where
   parseJSON _                          = mzero
 
 
-data ManeuverModifier
-  = ManeuverModifierUturn
-  | ManeuverModifierSharpRight
-  | ManeuverModifierRight
-  | ManeuverModifierSlightRight
-  | ManeuverModifierStraight
-  | ManeuverModifierSlightLeft
-  | ManeuverModifierLeft
-  | ManeuverModifierSharpLeft
-  | ManeuverModifierUnknown
-  deriving (Show, Eq)
-
+-- See Enum module
 instance FromJSON ManeuverModifier where
   parseJSON (String "uturn")        = return ManeuverModifierUturn
   parseJSON (String "sharp right")  = return ManeuverModifierSharpRight

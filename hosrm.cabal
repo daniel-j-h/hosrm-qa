@@ -19,6 +19,8 @@ executable hosrm
     Args
     Api
     Response
+    Store
+    Enum
   default-language:    Haskell2010
   ghc-options:         -Wall
   default-extensions:  NoImplicitPrelude
@@ -31,5 +33,8 @@ executable hosrm
     optparse-applicative  >= 0.12 && < 0.13,
     servant               >= 0.7 && < 0.8,
     servant-client        >= 0.7 && < 0.8,
+    http-client           >= 0.4 && < 0.5,
     aeson                 >= 0.11 && < 0.12,
-    http-client           >= 0.4 && < 0.5
+    persistent            >= 2.2 && < 2.3,
+    persistent-template   >= 2.1 && < 2.2,
+    persistent-sqlite     >= 2.2 && < 2.3
