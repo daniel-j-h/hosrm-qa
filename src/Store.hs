@@ -11,7 +11,12 @@ module Store
   , Maneuver(..)
   , ManeuverType(..)
   , ManeuverModifier(..)
-  , ToStorable(..)
+  , toStorableRoute
+  , toStorableLeg
+  , toStorableStep
+  , toStorableStepManeuver
+  , toStorableManeuverType
+  , toStorableManeuverModifier
   , module Database.Persist )
 where
 
@@ -43,30 +48,27 @@ Maneuver
 |]
 
 
-class ToStorable a b where
-  toStorable :: a -> b
+toStorableRoute :: Response.Route -> Route
+toStorableRoute r = Route (Response.routeDistance r)
+                          (Response.routeDuration r)
+                          (toStorableLeg <$> Response.routeLegs r)
 
-instance ToStorable Response.Route Route where
-  toStorable r = Route (Response.routeDistance r)
-                       (Response.routeDuration r)
-                       (toStorable <$> Response.routeLegs r)
+toStorableLeg :: Response.RouteLeg -> Leg
+toStorableLeg l = Leg (Response.routeLegDistance l)
+                      (Response.routeLegDuration l)
+                      (fmap toStorableStep <$> Response.routeLegSteps l)
 
-instance ToStorable Response.RouteLeg Leg where
-  toStorable l = Leg (Response.routeLegDistance l)
-                     (Response.routeLegDuration l)
-                     (fmap toStorable <$> Response.routeLegSteps l)
+toStorableStep :: Response.RouteStep -> Step
+toStorableStep s = Step (Response.routeStepDistance s)
+                        (Response.routeStepDuration s)
+                        (toStorableStepManeuver $ Response.routeStepManeuver s)
 
-instance ToStorable Response.RouteStep Step where
-  toStorable s = Step (Response.routeStepDistance s)
-                      (Response.routeStepDuration s)
-                      (toStorable $ Response.routeStepManeuver s)
+toStorableStepManeuver :: Response.StepManeuver -> Maneuver
+toStorableStepManeuver m = Maneuver (toStorableManeuverType $ Response.stepManeuverType m)
+                                    (toStorableManeuverModifier <$> Response.stepManeuverModifier m)
 
-instance ToStorable Response.StepManeuver Maneuver where
-  toStorable m = Maneuver (toStorable $   Response.stepManeuverType m)
-                          (toStorable <$> Response.stepManeuverModifier m)
+toStorableManeuverType :: ManeuverType -> ManeuverType
+toStorableManeuverType = identity
 
-instance ToStorable ManeuverType ManeuverType where
-  toStorable = identity
-
-instance ToStorable ManeuverModifier ManeuverModifier where
-  toStorable = identity
+toStorableManeuverModifier :: ManeuverModifier -> ManeuverModifier
+toStorableManeuverModifier = identity

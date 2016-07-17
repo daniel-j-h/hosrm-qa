@@ -19,4 +19,4 @@ before_script:
   - stack $ARGS --no-terminal --install-ghc build
 
 script:
-  - stack $ARGS --no-terminal --install-ghc exec -- hosrm
+  - stack $ARGS --no-terminal --install-ghc exec -- hosrm --help

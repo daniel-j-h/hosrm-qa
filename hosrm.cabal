@@ -38,5 +38,5 @@ executable hosrm
     persistent            >= 2.2 && < 2.3,
     persistent-template   >= 2.1 && < 2.2,
     persistent-sqlite     >= 2.2 && < 2.3,
-    resourcet,
-    monad-logger
+    resourcet             >= 1.1 && < 1.2,
+    monad-logger          >= 0.3 && < 0.4
