@@ -9,8 +9,8 @@ cache:
 env:
   - ARGS="--resolver=lts-6"
   - ARGS="--resolver=lts"
-#  - ARGS="--resolver=nightly"
-#  needs more recent cabal deps, check locally first at some point
+  - ARGS="--resolver=nightly-2016-07-17"
+  - ARGS="--resolver=nightly"
 
 install:
  - travis_retry curl -sSL https://get.haskellstack.org/ | sh

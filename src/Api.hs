@@ -109,7 +109,7 @@ runRoute manager host port = routeAPI coordinates alternatives steps geometries 
 
 explainError :: ServantError -> Text
 explainError (FailureResponse _ _ _)        = "Response Failure" 
-explainError (DecodeFailure msg _ _)        = "Decode Failure: " <> T.pack msg
+explainError (DecodeFailure m _ _)          = "Decode Failure: " <> T.pack m
 explainError (UnsupportedContentType _ _)   = "Unsupported Content Type"
 explainError (InvalidContentTypeHeader _ _) = "Invalid Content Type Header"
 explainError (ConnectionError _)            = "Connection Error"

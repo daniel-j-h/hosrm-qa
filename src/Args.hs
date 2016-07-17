@@ -8,7 +8,7 @@ module Args
   , execParser )
 where
 
-import Protolude
+import Protolude hiding ((<>))
 import Options.Applicative
 import qualified Data.Text as T
 

@@ -26,7 +26,7 @@ executable hosrm
   default-extensions:  NoImplicitPrelude
 
   build-depends:
-    base                  >= 4.8 && < 4.9,
+    base                  >= 4.8 && < 4.10,
     protolude             >= 0.1 && < 0.2,
     text                  >= 1.2 && < 1.3,
     mtl                   >= 2.2 && < 2.3,
@@ -35,8 +35,8 @@ executable hosrm
     servant-client        >= 0.7 && < 0.8,
     http-client           >= 0.4 && < 0.5,
     aeson                 >= 0.11 && < 0.12,
-    persistent            >= 2.2 && < 2.3,
-    persistent-template   >= 2.1 && < 2.2,
-    persistent-sqlite     >= 2.2 && < 2.3,
+    persistent            >= 2.2 && < 2.6,
+    persistent-template   >= 2.1 && < 2.6,
+    persistent-sqlite     >= 2.2 && < 2.6,
     resourcet             >= 1.1 && < 1.2,
     monad-logger          >= 0.3 && < 0.4
